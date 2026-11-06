@@ -1,0 +1,99 @@
+// Used from the checkout step onward. Install later: npm i prisma @prisma/client
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Fulfillment {
+  IN_HOUSE
+  OUTSOURCED
+}
+
+enum OrderStatus {
+  RECEIVED
+  PAYMENT_SUBMITTED
+  PAID
+  IN_PRODUCTION
+  READY
+  SHIPPED
+  COMPLETED
+  CANCELLED
+}
+
+enum DeliveryMethod {
+  PICKUP
+  DELIVERY
+}
+
+model Product {
+  id          String      @id
+  name        String
+  summary     String
+  fulfillment Fulfillment @default(IN_HOUSE)
+  active      Boolean     @default(true)
+  sortOrder   Int         @default(0)
+  config      Json // base, setupFee, minOrder, qty, tiers, options (see src/lib/catalog.ts)
+  updatedAt   DateTime    @updatedAt
+  items       OrderItem[]
+}
+
+model Order {
+  id          String         @id @default(cuid())
+  code        String         @unique
+  status      OrderStatus    @default(RECEIVED)
+  customer    String
+  email       String
+  phone       String
+  delivery    DeliveryMethod
+  address     String?
+  notes       String?
+  subtotal    Decimal        @db.Decimal(10, 2)
+  shippingFee Decimal        @default(0) @db.Decimal(10, 2)
+  total       Decimal        @db.Decimal(10, 2)
+  paymentMethod      String?
+  paymentRef         String?
+  paymentProofUrl    String?
+  paymentSubmittedAt DateTime?
+  paidAt             DateTime?
+  createdAt   DateTime       @default(now())
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id        String         @id @default(cuid())
+  orderId   String
+  order     Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product        @relation(fields: [productId], references: [id])
+  summary   String         @default("") // option labels at the time of the order
+  selection Json
+  qty       Int
+  unitPrice Decimal        @db.Decimal(10, 2)
+  lineTotal Decimal        @db.Decimal(10, 2)
+  files     UploadedFile[]
+}
+
+model UploadedFile {
+  id        String    @id @default(cuid())
+  itemId    String
+  item      OrderItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  url       String
+  name      String
+  sizeBytes Int
+  createdAt DateTime  @default(now())
+}
+
+model CustomQuoteRequest {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  details   String
+  fileUrls  String[]
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+}

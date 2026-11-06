@@ -52,7 +52,7 @@ async function ensureSeeded() {
 
 // Products customers can order. Without a database (local preview only), the built-in defaults are used.
 export async function getCatalog(): Promise<Product[]> {
-  if (!process.env.DATABASE_URL) return DEFAULTS;
+  if (!process.env.PRISMA_DATABASE_URL) return DEFAULTS;
   await ensureSeeded();
   const rows = await prisma.product.findMany({
     where: { active: true },

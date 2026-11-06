@@ -4,14 +4,14 @@ Next.js (App Router) + Tailwind v4. Quote calculator, cart, file upload, and ord
 
 ## Run locally
     npm install
-    cp .env.example .env.local   # fill in the two values below
+    cp .env.example .env         # fill in the values (Prisma and Next.js both read .env)
     npm run db:push              # creates the tables
     npm run dev
 
 ## Set up on Vercel
 1. Push to GitHub and import the repo in Vercel.
-2. In the project's Storage tab, create a **Neon Postgres** database and a **Blob** store and connect both. This sets `DATABASE_URL` and `BLOB_READ_WRITE_TOKEN`.
-3. Locally: `vercel env pull .env.local`, then `npm run db:push` once.
+2. In the project's Storage tab, create a **Prisma Postgres** database and a **Blob** store and connect both. This sets `PRISMA_DATABASE_URL` and `BLOB_READ_WRITE_TOKEN`. If the integration offers a custom env var prefix, leave it empty so the name stays `PRISMA_DATABASE_URL`.
+3. Locally: `vercel env pull .env`, then `npm run db:push` once.
 
 ## Where things are
 - `src/lib/catalog.ts`   starting products (copied into the database on first load)
@@ -42,7 +42,7 @@ where you open the files, reply by email or phone, and mark them Replied or Clos
 filters out most bots. You also get an owner email if Resend is set up.
 
 ## Admin
-Open `/admin` and log in with `ADMIN_PASSWORD`. Set these in `.env.local` and in Vercel:
+Open `/admin` and log in with `ADMIN_PASSWORD`. Set these in `.env` and in Vercel:
 - `ADMIN_PASSWORD`: the password you'll log in with
 - `ADMIN_SESSION_SECRET`: any long random string (16+ characters), for example from `openssl rand -hex 32`
 

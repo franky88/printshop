@@ -7,25 +7,22 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
   const { filter } = await searchParams;
   const active = FILTERS.find((f) => f.key === filter) ?? FILTERS[0];
 
-  const [orders, grouped] = await Promise.all([
-    prisma.order.findMany({
-      where: { status: { in: [...active.statuses] } },
-      orderBy: { createdAt: "desc" },
-      take: 100,
-      include: { items: { include: { product: true } } },
-    }),
-    prisma.order.groupBy({ by: ["status"], _count: { _all: true } }),
-  ]);
-
-  const counts = new Map<string, number>(grouped.map((g) => [g.status as string, g._count._all]));
-  const countFor = (statuses: readonly Status[]) => statuses.reduce((n, s) => n + (counts.get(s) ?? 0), 0);
+  const orders = await prisma.order.findMany({
+    where: { status: { in: [...active.statuses] } },
+    orderBy: [{ createdAt: "desc" }],
+    take: 100,
+    include: { items: { include: { product: true } } },
+  });
+  const counts = await Promise.all(
+    FILTERS.map((f) => prisma.order.count({ where: { status: { in: [...f.statuses] } } })),
+  );
 
   return (
     <>
       <h1 className="font-display text-4xl font-bold tracking-tight">Orders</h1>
 
       <nav aria-label="Order filters" className="mt-6 flex flex-wrap gap-2">
-        {FILTERS.map((f) => (
+        {FILTERS.map((f, i) => (
           <Link
             key={f.key}
             href={f.key === "open" ? "/admin" : `/admin?filter=${f.key}`}
@@ -34,7 +31,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
               f.key === active.key ? "border-ink bg-ink text-white" : "border-ink/20 bg-paper hover:border-ink"
             }`}
           >
-            {f.label} <span className="ml-2 tabular-nums opacity-70">{countFor(f.statuses)}</span>
+            {f.label} <span className="ml-2 tabular-nums opacity-70">{counts[i]}</span>
           </Link>
         ))}
       </nav>

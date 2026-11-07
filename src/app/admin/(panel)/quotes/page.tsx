@@ -9,22 +9,20 @@ export default async function QuoteRequests({ searchParams }: { searchParams: Pr
   const { filter } = await searchParams;
   const active = QUOTE_FILTERS.find((f) => f.key === filter) ?? QUOTE_FILTERS[0];
 
-  const [rows, grouped] = await Promise.all([
-    prisma.customQuoteRequest.findMany({
-      where: { status: { in: [...active.statuses] } },
-      orderBy: { createdAt: "desc" },
-      take: 100,
-    }),
-    prisma.customQuoteRequest.groupBy({ by: ["status"], _count: { _all: true } }),
-  ]);
-  const counts = new Map<string, number>(grouped.map((g) => [g.status as string, g._count._all]));
-  const countFor = (statuses: readonly QuoteStatus[]) => statuses.reduce((n, s) => n + (counts.get(s) ?? 0), 0);
+  const rows = await prisma.customQuoteRequest.findMany({
+    where: { status: { in: [...active.statuses] } },
+    orderBy: [{ createdAt: "desc" }],
+    take: 100,
+  });
+  const counts = await Promise.all(
+    QUOTE_FILTERS.map((f) => prisma.customQuoteRequest.count({ where: { status: { in: [...f.statuses] } } })),
+  );
 
   return (
     <>
       <h1 className="font-display text-4xl font-bold tracking-tight">Quote requests</h1>
       <nav aria-label="Quote filters" className="mt-6 flex flex-wrap gap-2">
-        {QUOTE_FILTERS.map((f) => (
+        {QUOTE_FILTERS.map((f, i) => (
           <Link
             key={f.key}
             href={f.key === "new" ? "/admin/quotes" : `/admin/quotes?filter=${f.key}`}
@@ -33,7 +31,7 @@ export default async function QuoteRequests({ searchParams }: { searchParams: Pr
               f.key === active.key ? "border-ink bg-ink text-white" : "border-ink/20 bg-paper hover:border-ink"
             }`}
           >
-            {f.label} <span className="ml-2 tabular-nums opacity-70">{countFor(f.statuses)}</span>
+            {f.label} <span className="ml-2 tabular-nums opacity-70">{counts[i]}</span>
           </Link>
         ))}
       </nav>

@@ -10,7 +10,7 @@ Next.js (App Router) + Tailwind v4. Quote calculator, cart, file upload, and ord
 
 ## Set up on Vercel
 1. Push to GitHub and import the repo in Vercel.
-2. In the project's Storage tab, create a **Prisma Postgres** database and a **Blob** store and connect both. Set `DATABASE_URL` to the Prisma Postgres URL, the one that starts with `prisma+postgres://` and contains `?api_key=` (not the direct `postgres://` URLs). The Blob store sets `BLOB_READ_WRITE_TOKEN`.
+2. In the project's Storage tab, create a **Prisma Postgres** database and a **Blob** store and connect both. Set `DATABASE_URL` to the direct connection string, the one that starts with `postgres://` (not the `prisma+postgres://` one). The Blob store sets `BLOB_READ_WRITE_TOKEN`.
 3. Locally: `vercel env pull .env`, then `npm run db:push` once.
 
 ## Where things are

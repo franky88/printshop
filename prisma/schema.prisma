@@ -1,4 +1,4 @@
-// Prisma Postgres. DATABASE_URL looks like prisma+postgres://accelerate.prisma-data.net/?api_key=...
+// Prisma Postgres over a direct connection. DATABASE_URL looks like postgres://user:password@host:5432/postgres?sslmode=require
 generator client {
   provider = "prisma-client-js"
 }

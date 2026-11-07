@@ -1,11 +1,11 @@
-// Prisma Postgres. PRISMA_DATABASE_URL looks like prisma+postgres://accelerate.prisma-data.net/?api_key=...
+// Prisma Postgres. PRISMA_DATABASE_URL_PRISMA_DATABASE_URL looks like prisma+postgres://accelerate.prisma-data.net/?api_key=...
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("PRISMA_DATABASE_URL")
+  url      = env("PRISMA_DATABASE_URL_PRISMA_DATABASE_URL")
 }
 
 enum Fulfillment {

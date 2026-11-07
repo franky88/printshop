@@ -1,16 +1,24 @@
 import Link from "next/link";
+import AdminSearch from "@/components/AdminSearch";
+import { requireAdmin } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 import { fmtDate } from "@/lib/orders";
 import { QUOTE_FILTERS, QUOTE_LABEL, type QuoteStatus } from "@/lib/quotes";
 
 export const metadata = { title: "Quote requests | Admin" };
 
-export default async function QuoteRequests({ searchParams }: { searchParams: Promise<{ filter?: string }> }) {
-  const { filter } = await searchParams;
-  const active = QUOTE_FILTERS.find((f) => f.key === filter) ?? QUOTE_FILTERS[0];
+export default async function QuoteRequests({ searchParams }: { searchParams: Promise<{ filter?: string; q?: string }> }) {
+  await requireAdmin();
+  const sp = await searchParams;
+  const q = (sp.q ?? "").trim().slice(0, 100);
+  const active = QUOTE_FILTERS.find((f) => f.key === sp.filter) ?? (q ? QUOTE_FILTERS[QUOTE_FILTERS.length - 1] : QUOTE_FILTERS[0]);
+  const match = (field: "name" | "email" | "phone" | "details") => ({ [field]: { contains: q, mode: "insensitive" as const } });
 
   const rows = await prisma.customQuoteRequest.findMany({
-    where: { status: { in: [...active.statuses] } },
+    where: {
+      status: { in: [...active.statuses] },
+      ...(q ? { OR: [match("name"), match("email"), match("phone"), match("details")] } : {}),
+    },
     orderBy: [{ createdAt: "desc" }],
     take: 100,
   });
@@ -18,14 +26,24 @@ export default async function QuoteRequests({ searchParams }: { searchParams: Pr
     QUOTE_FILTERS.map((f) => prisma.customQuoteRequest.count({ where: { status: { in: [...f.statuses] } } })),
   );
 
+  const href = (key: string) => {
+    const p = new URLSearchParams();
+    if (key !== "new" || q) p.set("filter", key);
+    if (q) p.set("q", q);
+    const s = p.toString();
+    return s ? `/admin/quotes?${s}` : "/admin/quotes";
+  };
+
   return (
     <>
       <h1 className="font-display text-4xl font-bold tracking-tight">Quote requests</h1>
-      <nav aria-label="Quote filters" className="mt-6 flex flex-wrap gap-2">
+      <AdminSearch action="/admin/quotes" q={q} filter={sp.filter} placeholder="Search by name, email, phone, or request text" />
+
+      <nav aria-label="Quote filters" className="mt-4 flex flex-wrap gap-2">
         {QUOTE_FILTERS.map((f, i) => (
           <Link
             key={f.key}
-            href={f.key === "new" ? "/admin/quotes" : `/admin/quotes?filter=${f.key}`}
+            href={href(f.key)}
             aria-current={f.key === active.key ? "page" : undefined}
             className={`flex min-h-11 items-center rounded-sm border-2 px-4 text-sm font-medium ${
               f.key === active.key ? "border-ink bg-ink text-white" : "border-ink/20 bg-paper hover:border-ink"
@@ -36,10 +54,17 @@ export default async function QuoteRequests({ searchParams }: { searchParams: Pr
         ))}
       </nav>
 
+      {q && (
+        <p className="mt-4 text-sm text-ink/70">
+          {rows.length} result{rows.length === 1 ? "" : "s"} for &ldquo;{q}&rdquo;
+          {rows.length === 100 ? " (showing the latest 100)" : ""}
+        </p>
+      )}
+
       {rows.length === 0 ? (
-        <p className="mt-10 text-ink/70">No requests here.</p>
+        <p className="mt-10 text-ink/70">{q ? "No requests match your search." : "No requests here."}</p>
       ) : (
-        <ul className="mt-6 space-y-2">
+        <ul className="mt-4 space-y-2">
           {rows.map((r) => (
             <li key={r.id}>
               <Link

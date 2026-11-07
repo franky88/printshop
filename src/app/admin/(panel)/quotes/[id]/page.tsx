@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { requireAdmin } from "@/lib/admin-auth";
 import { notFound } from "next/navigation";
 import { changeQuoteStatus } from "../../../actions";
 import { prisma } from "@/lib/prisma";
@@ -12,6 +13,7 @@ const tone = {
 };
 
 export default async function QuoteRequest({ params }: { params: Promise<{ id: string }> }) {
+  await requireAdmin();
   const { id } = await params;
   const q = await prisma.customQuoteRequest.findUnique({ where: { id } });
   if (!q) notFound();

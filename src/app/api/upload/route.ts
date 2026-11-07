@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 
+// Issues short-lived upload tokens. No onUploadCompleted callback is used: we only need the file URL,
+// and that callback can stall uploads when the site is behind Vercel's deployment protection.
 export async function POST(req: Request) {
-  const body = (await req.json()) as HandleUploadBody;
   try {
+    const body = (await req.json()) as HandleUploadBody;
     const json = await handleUpload({
       body,
       request: req,
@@ -18,10 +20,10 @@ export async function POST(req: Request) {
         maximumSizeInBytes: 100 * 1024 * 1024,
         addRandomSuffix: true,
       }),
-      onUploadCompleted: async () => {},
     });
     return NextResponse.json(json);
-  } catch {
-    return NextResponse.json({ error: "Upload not allowed." }, { status: 400 });
+  } catch (e) {
+    console.error("Upload token failed", e);
+    return NextResponse.json({ error: e instanceof Error ? e.message : "Upload not allowed." }, { status: 400 });
   }
 }

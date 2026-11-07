@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SiteFooter from "@/components/SiteFooter";
 import Calculator from "@/components/Calculator";
 import SiteHeader from "@/components/SiteHeader";
 import { getCatalog } from "@/lib/catalog-db";
@@ -28,6 +29,7 @@ export default async function Home() {
           <p className="mt-10 text-lg">No products are available right now. Please send us a custom quote request.</p>
         )}
       </main>
+      <SiteFooter />
     </>
   );
 }

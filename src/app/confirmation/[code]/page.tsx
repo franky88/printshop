@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import SiteFooter from "@/components/SiteFooter";
 import Link from "next/link";
 import PaymentForm from "@/components/PaymentForm";
 import SiteHeader from "@/components/SiteHeader";
@@ -99,6 +100,7 @@ export default async function Confirmation({ params }: { params: Promise<{ code:
           Start another quote
         </Link>
       </main>
+      <SiteFooter />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import CartView from "@/components/CartView";
+import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { getCatalog } from "@/lib/catalog-db";
 
@@ -14,6 +15,7 @@ export default async function CartPage() {
         <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">Your order</h1>
         <CartView catalog={catalog} />
       </main>
+      <SiteFooter />
     </>
   );
 }

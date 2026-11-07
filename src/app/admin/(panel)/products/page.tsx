@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { requireAdmin } from "@/lib/admin-auth";
 import { getAllProductRows, rowToProduct } from "@/lib/catalog-db";
 import { peso } from "@/lib/quote";
 
 export const metadata = { title: "Products | Admin" };
 
 export default async function Products() {
+  await requireAdmin();
   const rows = await getAllProductRows();
   return (
     <>

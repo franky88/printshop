@@ -57,17 +57,32 @@ export default function FileUpload({
         const type = extensions.includes(ext) ? TYPES[ext] : undefined;
         if (!type) throw new Error(`${file.name}: use a ${list} file.`);
         if (file.size > MAX) throw new Error(`${file.name} is over 100 MB.`);
-        const blob = await upload(`${prefix}/${file.name}`, file, {
-          access: "public",
-          handleUploadUrl: "/api/upload",
-          contentType: type,
-          onUploadProgress: (p) => setProgress(Math.round(p.percentage)),
-        });
+        // Stop waiting if nothing moves for 45 seconds, so the page never hangs on "Uploading".
+        const ctrl = new AbortController();
+        let timer = setTimeout(() => ctrl.abort(), 45000);
+        let blob: Awaited<ReturnType<typeof upload>>;
+        try {
+          blob = await upload(`${prefix}/${file.name}`, file, {
+            access: "public",
+            handleUploadUrl: "/api/upload",
+            contentType: type,
+            abortSignal: ctrl.signal,
+            onUploadProgress: (p) => {
+              clearTimeout(timer);
+              timer = setTimeout(() => ctrl.abort(), 45000);
+              setProgress(Math.round(p.percentage));
+            },
+          });
+        } finally {
+          clearTimeout(timer);
+        }
         next = [...next, { url: blob.url, name: file.name, size: file.size }];
         onChange(next);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Upload failed. Try again.");
+      console.error("Upload failed", err);
+      const aborted = err instanceof Error && err.name === "AbortError";
+      setError(aborted ? "The upload timed out. Check your connection and try again." : err instanceof Error ? err.message : "Upload failed. Try again.");
     }
     setBusy(false);
     setProgress(0);

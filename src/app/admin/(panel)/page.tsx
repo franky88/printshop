@@ -1,14 +1,23 @@
 import Link from "next/link";
+import AdminSearch from "@/components/AdminSearch";
+import { requireAdmin } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 import { FILTERS, LABEL, fmtDate, type Status } from "@/lib/orders";
 import { peso } from "@/lib/quote";
 
-export default async function AdminOrders({ searchParams }: { searchParams: Promise<{ filter?: string }> }) {
-  const { filter } = await searchParams;
-  const active = FILTERS.find((f) => f.key === filter) ?? FILTERS[0];
+export default async function AdminOrders({ searchParams }: { searchParams: Promise<{ filter?: string; q?: string }> }) {
+  await requireAdmin();
+  const sp = await searchParams;
+  const q = (sp.q ?? "").trim().slice(0, 100);
+  // A search looks through every order unless a tab was picked on purpose.
+  const active = FILTERS.find((f) => f.key === sp.filter) ?? (q ? FILTERS[FILTERS.length - 1] : FILTERS[0]);
+  const match = (field: "code" | "customer" | "email" | "phone") => ({ [field]: { contains: q, mode: "insensitive" as const } });
 
   const orders = await prisma.order.findMany({
-    where: { status: { in: [...active.statuses] } },
+    where: {
+      status: { in: [...active.statuses] },
+      ...(q ? { OR: [match("code"), match("customer"), match("email"), match("phone")] } : {}),
+    },
     orderBy: [{ createdAt: "desc" }],
     take: 100,
     include: { items: { include: { product: true } } },
@@ -17,15 +26,24 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
     FILTERS.map((f) => prisma.order.count({ where: { status: { in: [...f.statuses] } } })),
   );
 
+  const href = (key: string) => {
+    const p = new URLSearchParams();
+    if (key !== "open" || q) p.set("filter", key);
+    if (q) p.set("q", q);
+    const s = p.toString();
+    return s ? `/admin?${s}` : "/admin";
+  };
+
   return (
     <>
       <h1 className="font-display text-4xl font-bold tracking-tight">Orders</h1>
+      <AdminSearch action="/admin" q={q} filter={sp.filter} placeholder="Search by order number, name, email, or phone" />
 
-      <nav aria-label="Order filters" className="mt-6 flex flex-wrap gap-2">
+      <nav aria-label="Order filters" className="mt-4 flex flex-wrap gap-2">
         {FILTERS.map((f, i) => (
           <Link
             key={f.key}
-            href={f.key === "open" ? "/admin" : `/admin?filter=${f.key}`}
+            href={href(f.key)}
             aria-current={f.key === active.key ? "page" : undefined}
             className={`flex min-h-11 items-center rounded-sm border-2 px-4 text-sm font-medium ${
               f.key === active.key ? "border-ink bg-ink text-white" : "border-ink/20 bg-paper hover:border-ink"
@@ -36,10 +54,17 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
         ))}
       </nav>
 
+      {q && (
+        <p className="mt-4 text-sm text-ink/70">
+          {orders.length} result{orders.length === 1 ? "" : "s"} for &ldquo;{q}&rdquo;
+          {orders.length === 100 ? " (showing the latest 100)" : ""}
+        </p>
+      )}
+
       {orders.length === 0 ? (
-        <p className="mt-10 text-ink/70">No orders here.</p>
+        <p className="mt-10 text-ink/70">{q ? "No orders match your search." : "No orders here."}</p>
       ) : (
-        <ul className="mt-6 space-y-2">
+        <ul className="mt-4 space-y-2">
           {orders.map((o) => (
             <li key={o.id}>
               <Link

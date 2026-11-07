@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { requireAdmin } from "@/lib/admin-auth";
 import { notFound } from "next/navigation";
 import ProductEditor from "@/components/ProductEditor";
 import { rowToProduct } from "@/lib/catalog-db";
@@ -7,6 +8,7 @@ import { prisma } from "@/lib/prisma";
 export const metadata = { title: "Edit product | Admin" };
 
 export default async function EditProduct({ params }: { params: Promise<{ id: string }> }) {
+  await requireAdmin();
   const { id } = await params;
   const row = await prisma.product.findUnique({ where: { id } });
   if (!row) notFound();

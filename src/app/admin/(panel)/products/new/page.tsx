@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { requireAdmin } from "@/lib/admin-auth";
 import ProductEditor from "@/components/ProductEditor";
 import type { Product } from "@/lib/catalog";
 
@@ -18,7 +19,8 @@ const blank: Product = {
   options: [],
 };
 
-export default function NewProduct() {
+export default async function NewProduct() {
+  await requireAdmin();
   return (
     <>
       <Link href="/admin/products" className="inline-flex min-h-11 items-center text-sm font-semibold text-cyan-ink underline underline-offset-4">

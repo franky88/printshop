@@ -1,4 +1,5 @@
 import CustomQuoteForm from "@/components/CustomQuoteForm";
+import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
 export const metadata = { title: "Request a custom quote" };
@@ -15,6 +16,7 @@ export default function CustomQuotePage() {
         </p>
         <CustomQuoteForm />
       </main>
+      <SiteFooter />
     </>
   );
 }

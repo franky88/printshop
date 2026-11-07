@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { requireAdmin } from "@/lib/admin-auth";
 import { notFound } from "next/navigation";
 import { changeStatus } from "../../../actions";
 import { prisma } from "@/lib/prisma";
@@ -15,6 +16,7 @@ const tone = {
 };
 
 export default async function AdminOrder({ params }: { params: Promise<{ code: string }> }) {
+  await requireAdmin();
   const { code } = await params;
   const order = await prisma.order.findUnique({
     where: { code },

@@ -36,6 +36,11 @@ groups. Changes show on the site right away, and the server always prices orders
 Products can be hidden but not deleted, so old orders keep working. Each order stores its own option labels.
 After pulling this update, run `npm run db:push` again.
 
+## Search, customers, footer
+- Orders and Quote requests each have a search box. A search looks through every status unless you pick a tab.
+- `/admin/customers` lists everyone who ordered or sent a quote request, grouped by email, with order counts and the amount paid. Click a name to see their history.
+- The website footer shows your contact details from `src/contact.ts` (phone, email, address, hours, Facebook). Empty fields are hidden.
+
 ## Custom quote requests
 `/custom-quote` is a public form (name, contact, description, up to 5 files). Requests land in `/admin/quotes`,
 where you open the files, reply by email or phone, and mark them Replied or Closed. A hidden honeypot field

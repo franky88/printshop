@@ -40,14 +40,14 @@ export default async function Confirmation({ params }: { params: Promise<{ code:
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto max-w-2xl px-5 pb-20">
-        <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">Order {order.code}</h1>
+      <main className="mx-auto max-w-2xl px-5 pb-20 pt-10">
+        <h1 className="font-display text-2xl font-bold tracking-tight sm:text-4xl">Order {order.code}</h1>
         <p className="mt-3 text-lg">
           Status: <strong>{status}</strong>
         </p>
         <p className="mt-1 text-sm text-ink/65">Save this page&rsquo;s link or order number to check on your order.</p>
 
-        <div className="mt-8 bg-paper p-6">
+        <div className="mt-8 rounded-2xl bg-paper p-6">
           <ul className="divide-y divide-dashed divide-ink/25">
             {order.items.map((it) => (
               <li key={it.id} className="flex items-start justify-between gap-4 py-3 first:pt-0">

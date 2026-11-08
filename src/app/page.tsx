@@ -1,6 +1,8 @@
 import Link from "next/link";
-import SiteFooter from "@/components/SiteFooter";
 import Calculator from "@/components/Calculator";
+import FileTips from "@/components/FileTips";
+import HowItWorks from "@/components/HowItWorks";
+import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { getCatalog } from "@/lib/catalog-db";
 
@@ -11,23 +13,36 @@ export default async function Home() {
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto max-w-6xl px-5 pb-20">
-        <h1 className="max-w-2xl font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl">
-          Know the price before you send the file.
-        </h1>
-        <p className="mt-4 max-w-prose text-lg text-ink/75">
-          Choose what you need and set the quantity. Your quote updates as you go.
-        </p>
-        <p className="mt-2">
-          <Link href="/custom-quote" className="inline-flex min-h-11 items-center font-semibold text-cyan-ink underline underline-offset-4">
-            Need something else? Request a custom quote
-          </Link>
-        </p>
-        {catalog.length > 0 ? (
+      <main className="relative mx-auto max-w-6xl px-5 pb-10 pt-12 sm:pt-20">
+        <div aria-hidden className="halftone pointer-events-none absolute inset-x-0 top-0 -z-10 h-[32rem]" />
+        <section>
+          <h1 className="max-w-3xl font-display text-3xl font-bold leading-[1.1] tracking-tight sm:text-5xl">
+            Know the price before you send the file.
+          </h1>
+          <p className="mt-5 max-w-prose text-lg text-ink/75">
+            Choose what you need and set the quantity. Your quote updates as you go, and you can upload your file and
+            order online.
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <a
+              href="#price"
+              className="inline-flex min-h-12 items-center rounded-full bg-ink px-7 font-semibold text-white transition-colors hover:bg-cyan-ink"
+            >
+              See your price
+            </a>
+            <Link
+              href="/custom-quote"
+              className="inline-flex min-h-12 items-center rounded-full border-2 border-ink/20 bg-paper px-7 font-semibold transition-colors hover:border-ink"
+            >
+              Request a custom quote
+            </Link>
+          </div>
+        </section>
+        <div id="price" className="scroll-mt-28">
           <Calculator catalog={catalog} />
-        ) : (
-          <p className="mt-10 text-lg">No products are available right now. Please send us a custom quote request.</p>
-        )}
+        </div>
+        <HowItWorks />
+        <FileTips />
       </main>
       <SiteFooter />
     </>

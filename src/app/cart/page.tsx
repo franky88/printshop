@@ -11,8 +11,8 @@ export default async function CartPage() {
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto max-w-6xl px-5 pb-20">
-        <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">Your order</h1>
+      <main className="mx-auto max-w-6xl px-5 pb-20 pt-10">
+        <h1 className="font-display text-2xl font-bold tracking-tight sm:text-4xl">Your order</h1>
         <CartView catalog={catalog} />
       </main>
       <SiteFooter />

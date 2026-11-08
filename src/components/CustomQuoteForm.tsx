@@ -42,7 +42,7 @@ export default function CustomQuoteForm() {
 
   if (sent) {
     return (
-      <div className="mt-10 bg-paper p-6">
+      <div className="mt-10 rounded-2xl bg-paper p-6">
         <h2 className="font-display text-2xl font-bold">Request sent</h2>
         <p className="mt-2 max-w-prose">
           We&rsquo;ll review your details and reply by email or text with a quote.
@@ -55,7 +55,7 @@ export default function CustomQuoteForm() {
   }
 
   return (
-    <form onSubmit={submit} className="mt-10 space-y-5 bg-paper p-6">
+    <form onSubmit={submit} className="mt-10 space-y-5 rounded-2xl bg-paper p-6">
       <label className="block text-sm">
         Full name
         <input name="name" required maxLength={100} autoComplete="name" className={`${field} mt-1`} />
@@ -100,7 +100,7 @@ export default function CustomQuoteForm() {
       <button
         type="submit"
         disabled={busy}
-        className="min-h-12 w-full rounded-sm bg-cyan-ink px-6 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30 sm:w-auto"
+        className="min-h-12 w-full rounded-full bg-cyan-ink px-6 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30 sm:w-auto"
       >
         {busy ? "Sending…" : "Send request"}
       </button>

@@ -36,7 +36,7 @@ export default async function CustomerView({ searchParams }: { searchParams: Pro
       <Link href="/admin/customers" className="inline-flex min-h-11 items-center text-sm font-semibold text-cyan-ink underline underline-offset-4">
         All customers
       </Link>
-      <h1 className="font-display text-4xl font-bold tracking-tight">{latest.name}</h1>
+      <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">{latest.name}</h1>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_320px]">
         <div className="space-y-8">
@@ -50,7 +50,7 @@ export default async function CustomerView({ searchParams }: { searchParams: Pro
                   <li key={o.id}>
                     <Link
                       href={`/admin/orders/${o.code}`}
-                      className="grid gap-x-6 gap-y-1 bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[1fr_auto] sm:items-center"
+                      className="grid gap-x-6 gap-y-1 rounded-2xl bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[1fr_auto] sm:items-center"
                     >
                       <span className="min-w-0">
                         <span className="block font-display font-bold tabular-nums">{o.code}</span>
@@ -80,7 +80,7 @@ export default async function CustomerView({ searchParams }: { searchParams: Pro
                   <li key={r.id}>
                     <Link
                       href={`/admin/quotes/${r.id}`}
-                      className="grid gap-x-6 gap-y-1 bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[1fr_auto] sm:items-center"
+                      className="grid gap-x-6 gap-y-1 rounded-2xl bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[1fr_auto] sm:items-center"
                     >
                       <span className="min-w-0">
                         <span className="block truncate">{r.details}</span>
@@ -98,7 +98,7 @@ export default async function CustomerView({ searchParams }: { searchParams: Pro
         </div>
 
         <div className="space-y-4 lg:sticky lg:top-6 lg:self-start">
-          <section className="bg-paper p-5">
+          <section className="rounded-2xl bg-paper p-5">
             <h2 className="font-display text-lg font-bold">Contact</h2>
             <dl className="mt-3 space-y-1 text-sm">
               <div>
@@ -109,7 +109,7 @@ export default async function CustomerView({ searchParams }: { searchParams: Pro
               </div>
             </dl>
           </section>
-          <section className="bg-paper p-5">
+          <section className="rounded-2xl bg-paper p-5">
             <h2 className="font-display text-lg font-bold">Totals</h2>
             <dl className="mt-3 space-y-1 text-sm tabular-nums">
               <div className="flex justify-between">

@@ -36,7 +36,7 @@ export default async function QuoteRequests({ searchParams }: { searchParams: Pr
 
   return (
     <>
-      <h1 className="font-display text-4xl font-bold tracking-tight">Quote requests</h1>
+      <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">Quote requests</h1>
       <AdminSearch action="/admin/quotes" q={q} filter={sp.filter} placeholder="Search by name, email, phone, or request text" />
 
       <nav aria-label="Quote filters" className="mt-4 flex flex-wrap gap-2">
@@ -69,7 +69,7 @@ export default async function QuoteRequests({ searchParams }: { searchParams: Pr
             <li key={r.id}>
               <Link
                 href={`/admin/quotes/${r.id}`}
-                className="grid gap-x-6 gap-y-1 bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[1fr_auto] sm:items-center"
+                className="grid gap-x-6 gap-y-1 rounded-2xl bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[1fr_auto] sm:items-center"
               >
                 <span className="min-w-0">
                   <span className="block truncate font-medium">{r.name}</span>

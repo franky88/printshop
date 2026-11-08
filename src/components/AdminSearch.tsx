@@ -13,7 +13,7 @@ export default function AdminSearch({ action, q, placeholder, filter }: { action
         maxLength={100}
         className="min-h-11 w-full max-w-md rounded-sm border-2 border-ink/20 bg-paper px-3"
       />
-      <button type="submit" className="min-h-11 rounded-sm bg-ink px-5 text-sm font-semibold text-white transition-colors hover:bg-cyan-ink">
+      <button type="submit" className="min-h-11 rounded-full bg-ink px-5 text-sm font-semibold text-white transition-colors hover:bg-cyan-ink">
         Search
       </button>
       {q && (

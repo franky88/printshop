@@ -33,7 +33,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
         All orders
       </Link>
       <div className="flex flex-wrap items-baseline gap-x-4">
-        <h1 className="font-display text-4xl font-bold tracking-tight tabular-nums">{order.code}</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl tabular-nums">{order.code}</h1>
         <p className="text-lg font-semibold">{LABEL[order.status as Status] ?? order.status}</p>
       </div>
       <p className="mt-1 text-sm text-ink/65">Placed {fmtDate(order.createdAt)}</p>
@@ -41,7 +41,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_360px]">
         <div className="space-y-4">
           {order.items.map((it) => (
-            <section key={it.id} className="bg-paper p-5">
+            <section key={it.id} className="rounded-2xl bg-paper p-5">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="font-display text-lg font-bold">
@@ -67,7 +67,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
               )}
             </section>
           ))}
-          <dl className="space-y-1.5 bg-paper p-5 text-sm tabular-nums">
+          <dl className="space-y-1.5 rounded-2xl bg-paper p-5 text-sm tabular-nums">
             <div className="flex justify-between">
               <dt>Items</dt>
               <dd>{peso(Number(order.subtotal))}</dd>
@@ -87,7 +87,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
 
         <div className="space-y-4 lg:sticky lg:top-6 lg:self-start">
           {moves.length > 0 && (
-            <section className="bg-paper p-5">
+            <section className="rounded-2xl bg-paper p-5">
               <h2 className="font-display text-lg font-bold">Update status</h2>
               <div className="mt-3 flex flex-wrap items-center gap-3">
                 {moves.map((m) => (
@@ -103,7 +103,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
             </section>
           )}
 
-          <section className="bg-paper p-5">
+          <section className="rounded-2xl bg-paper p-5">
             <h2 className="font-display text-lg font-bold">Payment</h2>
             {order.paymentRef ? (
               <dl className="mt-3 space-y-1 text-sm">
@@ -142,7 +142,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
             )}
           </section>
 
-          <section className="bg-paper p-5">
+          <section className="rounded-2xl bg-paper p-5">
             <h2 className="font-display text-lg font-bold">Customer</h2>
             <dl className="mt-3 space-y-1 text-sm">
               <div>{order.customer}</div>

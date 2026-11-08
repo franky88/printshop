@@ -36,7 +36,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
 
   return (
     <>
-      <h1 className="font-display text-4xl font-bold tracking-tight">Orders</h1>
+      <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">Orders</h1>
       <AdminSearch action="/admin" q={q} filter={sp.filter} placeholder="Search by order number, name, email, or phone" />
 
       <nav aria-label="Order filters" className="mt-4 flex flex-wrap gap-2">
@@ -69,7 +69,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
             <li key={o.id}>
               <Link
                 href={`/admin/orders/${o.code}`}
-                className="grid gap-x-6 gap-y-1 bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[9rem_1fr_auto_11rem] sm:items-center"
+                className="grid gap-x-6 gap-y-1 rounded-2xl bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[9rem_1fr_auto_11rem] sm:items-center"
               >
                 <span className="font-display font-bold tabular-nums">{o.code}</span>
                 <span className="min-w-0">

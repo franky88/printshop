@@ -75,7 +75,7 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
     <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_400px]">
       <ul className="space-y-4">
         {priced.map(({ it, q }) => (
-          <li key={it.id} className="bg-paper p-5">
+          <li key={it.id} className="rounded-2xl bg-paper p-5">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="font-display text-lg font-bold">{byId(it.productId)?.name}</p>
@@ -116,7 +116,7 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
       </ul>
 
       <form onSubmit={submit} className="space-y-5 lg:sticky lg:top-6 lg:self-start">
-        <div className="bg-paper p-5">
+        <div className="rounded-2xl bg-paper p-5">
           <h2 className="font-display text-lg font-bold">Your details</h2>
           <div className="mt-4 space-y-4">
             <label className="block text-sm">
@@ -160,7 +160,7 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
           </div>
         </div>
 
-        <div className="bg-paper p-5">
+        <div className="rounded-2xl bg-paper p-5">
           <dl className="space-y-1.5 text-sm tabular-nums">
             <div className="flex justify-between">
               <dt>Items</dt>
@@ -187,7 +187,7 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
           <button
             type="submit"
             disabled={busy || invalid}
-            className="mt-5 min-h-12 w-full rounded-sm bg-cyan-ink px-6 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30"
+            className="mt-5 min-h-12 w-full rounded-full bg-cyan-ink px-6 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30"
           >
             {busy ? "Placing order…" : "Place order"}
           </button>

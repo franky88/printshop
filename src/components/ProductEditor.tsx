@@ -18,7 +18,7 @@ const rid = () => Math.random().toString(36).slice(2, 8);
 const field = "min-h-11 w-full rounded-sm border-2 border-ink/20 bg-paper px-3 py-2";
 const btn = "min-h-11 rounded-sm border-2 border-ink/30 bg-paper px-4 text-sm font-semibold hover:border-ink";
 const link = "min-h-11 shrink-0 text-sm text-cyan-ink underline underline-offset-4";
-const box = "bg-paper p-5";
+const box = "rounded-2xl bg-paper p-5";
 
 function init(p: Product, active: boolean, sortOrder: number): S {
   return {
@@ -189,7 +189,7 @@ export default function ProductEditor({ product, active, sortOrder, isNew }: { p
       </section>
 
       <div className="flex flex-wrap items-center gap-4">
-        <button type="submit" disabled={pending} className="min-h-12 rounded-sm bg-cyan-ink px-8 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30">
+        <button type="submit" disabled={pending} className="min-h-12 rounded-full bg-cyan-ink px-8 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30">
           {pending ? "Saving…" : isNew ? "Create product" : "Save changes"}
         </button>
         {state.error && <p role="alert" className="text-sm text-red-700">{state.error}</p>}

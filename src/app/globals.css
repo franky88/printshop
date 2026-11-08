@@ -1,22 +1,67 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: #14161a;
-  --color-sheet: #f3f5f7;
+  --color-ink: #15171c; /* process black */
+  --color-sheet: #f5f7fb; /* paper */
   --color-paper: #ffffff;
-  --color-cyan-ink: #00709f;
-  --color-yolk: #ffc800;
-  --font-display: var(--font-bricolage);
-  --font-body: var(--font-figtree);
+  --color-cyan-ink: #0069a8; /* cyan, deepened for text and buttons */
+  --color-process-c: #00a6e6;
+  --color-process-m: #e5007d;
+  --color-process-y: #ffd60a;
+  --color-yolk: #ffd60a;
+  --font-display: var(--font-unbounded);
+  --font-body: var(--font-instrument);
+  --radius-sm: 0.5rem;
 }
 
 body {
   background: var(--color-sheet);
   color: var(--color-ink);
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  overflow-x: clip;
 }
 
 :focus-visible {
   outline: 2px solid var(--color-cyan-ink);
   outline-offset: 2px;
+}
+
+/* Frosted glass: the header and the live quote slip. */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 24px 48px -28px rgba(21, 23, 28, 0.4);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgba(255, 255, 255, 0.96);
+  }
+}
+
+/* Overprint: the three ink circles print onto the page one after another, then overlap like real ink. */
+@keyframes ink-in {
+  from { opacity: 0; transform: scale(0.55); }
+  to { opacity: 0.92; transform: scale(1); }
+}
+.ink {
+  mix-blend-mode: multiply;
+  opacity: 0.92;
+  animation: ink-in 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.ink-2 { animation-delay: 160ms; }
+.ink-3 { animation-delay: 320ms; }
+@media (prefers-reduced-motion: reduce) {
+  .ink { animation: none; }
+}
+
+/* Halftone dots behind the hero. */
+.halftone {
+  background-image: radial-gradient(rgba(21, 23, 28, 0.13) 1.2px, transparent 1.7px);
+  background-size: 16px 16px;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+  mask-image: linear-gradient(to bottom, #000, transparent);
 }

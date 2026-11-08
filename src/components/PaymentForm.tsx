@@ -43,7 +43,7 @@ export default function PaymentForm({ code, total, methods }: { code: string; to
   }
 
   return (
-    <section className="mt-8 bg-paper p-6">
+    <section className="mt-8 rounded-2xl bg-paper p-6">
       <h2 className="font-display text-2xl font-bold">Pay for your order</h2>
       <p className="mt-2 text-ink/75">
         Send exactly <strong className="tabular-nums">{peso(total)}</strong>, then tell us how you paid below.
@@ -113,7 +113,7 @@ export default function PaymentForm({ code, total, methods }: { code: string; to
         <button
           type="submit"
           disabled={busy}
-          className="min-h-12 w-full rounded-sm bg-cyan-ink px-6 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30 sm:w-auto"
+          className="min-h-12 w-full rounded-full bg-cyan-ink px-6 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30 sm:w-auto"
         >
           {busy ? "Sending…" : "I've paid"}
         </button>

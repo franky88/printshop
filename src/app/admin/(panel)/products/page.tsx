@@ -11,8 +11,8 @@ export default async function Products() {
   return (
     <>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="font-display text-4xl font-bold tracking-tight">Products</h1>
-        <Link href="/admin/products/new" className="flex min-h-11 items-center rounded-sm bg-cyan-ink px-4 text-sm font-semibold text-white hover:bg-ink">
+        <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">Products</h1>
+        <Link href="/admin/products/new" className="flex min-h-11 items-center rounded-full bg-cyan-ink px-4 text-sm font-semibold text-white hover:bg-ink">
           Add product
         </Link>
       </div>
@@ -24,7 +24,7 @@ export default async function Products() {
             <li key={r.id}>
               <Link
                 href={`/admin/products/${r.id}`}
-                className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink"
+                className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 rounded-2xl bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink"
               >
                 <span>
                   <span className="block font-medium">{p.name}</span>

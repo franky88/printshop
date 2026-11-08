@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Figtree } from "next/font/google";
+import { Instrument_Sans, Unbounded } from "next/font/google";
 import { CartProvider } from "@/lib/cart";
 import { shop } from "@/config";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage" });
-const body = Figtree({ subsets: ["latin"], variable: "--font-figtree" });
+const display = Unbounded({ subsets: ["latin"], variable: "--font-unbounded" });
+const body = Instrument_Sans({ subsets: ["latin"], variable: "--font-instrument" });
 
 export const metadata: Metadata = {
   title: `${shop.name} | Printing quotes and orders`,

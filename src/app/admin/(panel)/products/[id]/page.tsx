@@ -18,7 +18,7 @@ export default async function EditProduct({ params }: { params: Promise<{ id: st
       <Link href="/admin/products" className="inline-flex min-h-11 items-center text-sm font-semibold text-cyan-ink underline underline-offset-4">
         All products
       </Link>
-      <h1 className="font-display text-4xl font-bold tracking-tight">{product.name}</h1>
+      <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">{product.name}</h1>
       <ProductEditor product={product} active={row.active} sortOrder={row.sortOrder} isNew={false} />
     </>
   );

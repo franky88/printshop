@@ -57,7 +57,7 @@ export default async function Customers({ searchParams }: { searchParams: Promis
 
   return (
     <>
-      <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">Customers</h1>
+      <h1 className="font-display text-2xl font-black tracking-tight sm:text-3xl">Customers</h1>
       <p className="mt-3 max-w-prose text-ink/70">
         Everyone who placed an order or sent a quote request, grouped by email. &ldquo;Paid&rdquo; adds up orders from
         confirmed payment onward.
@@ -76,10 +76,10 @@ export default async function Customers({ searchParams }: { searchParams: Promis
             <li key={c.email}>
               <Link
                 href={`/admin/customers/view?email=${encodeURIComponent(c.email)}`}
-                className="grid gap-x-6 gap-y-1 rounded-2xl bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[1fr_auto] sm:items-center"
+                className="grid gap-x-6 gap-y-1 surface rounded-2xl p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[1fr_auto] sm:items-center"
               >
                 <span className="min-w-0">
-                  <span className="block truncate font-medium">{c.name}</span>
+                  <span className="block truncate font-bold">{c.name}</span>
                   <span className="block truncate text-sm text-ink/65">
                     {c.email}, {c.phone}
                   </span>
@@ -88,7 +88,7 @@ export default async function Customers({ searchParams }: { searchParams: Promis
                   </span>
                 </span>
                 <span className="sm:text-right">
-                  <span className="block font-semibold tabular-nums">{peso(c.paid)} paid</span>
+                  <span className="block font-bold tabular-nums">{peso(c.paid)} paid</span>
                   <span className="block text-sm text-ink/65">Last activity {fmtDate(c.last)}</span>
                 </span>
               </Link>

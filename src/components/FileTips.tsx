@@ -1,8 +1,9 @@
 export default function FileTips() {
   return (
-    <section aria-labelledby="files" className="mt-28 grid items-center gap-10 lg:grid-cols-2">
+    <section aria-labelledby="files" className="mt-16 grid items-center gap-10 sm:mt-24 lg:grid-cols-2 lg:gap-16">
       <div>
-        <h2 id="files" className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+        <p className="eyebrow">A little prep goes a long way</p>
+        <h2 id="files" className="mt-2 font-display text-3xl font-black tracking-tight sm:text-4xl">
           Send files that print well
         </h2>
         <ul className="mt-6 max-w-prose space-y-4 text-ink/80">
@@ -13,26 +14,25 @@ export default function FileTips() {
             <strong className="text-ink">Use 300 dpi images.</strong> Lower resolution looks soft on paper.
           </li>
           <li>
-            <strong className="text-ink">Extend backgrounds into the bleed</strong> if your design runs to the edge, so
-            no white line shows after trimming.
+            <strong className="text-ink">Add 3 mm of bleed.</strong> Extend backgrounds beyond the trim line so no white edge shows after cutting.
           </li>
           <li>
-            <strong className="text-ink">Keep text inside the safe area</strong> so nothing gets cut off.
+            <strong className="text-ink">Keep text 5 mm inside the trim.</strong> Give names, numbers, and other important details room to breathe.
           </li>
         </ul>
       </div>
 
-      <figure className="rounded-3xl bg-paper p-6">
+      <figure className="surface rounded-2xl p-6 sm:p-8">
         <svg
           viewBox="0 0 320 220"
           role="img"
           aria-label="A sheet showing the bleed area outside the trim line and the safe area inside it"
           className="mx-auto w-full max-w-md"
         >
-          <rect x="38" y="28" width="244" height="164" className="fill-process-m/20" />
+          <rect x="38" y="28" width="244" height="164" className="fill-gold/60" />
           <rect x="52" y="42" width="216" height="136" className="fill-paper stroke-ink" strokeWidth="1.5" />
-          <rect x="70" y="60" width="180" height="100" fill="none" className="stroke-process-c" strokeWidth="1.5" strokeDasharray="5 4" />
-          <text x="160" y="116" textAnchor="middle" className="fill-ink text-[13px] font-semibold">
+          <rect x="70" y="60" width="180" height="100" fill="none" className="stroke-teal" strokeWidth="1.5" strokeDasharray="5 4" />
+          <text x="160" y="116" textAnchor="middle" className="fill-ink text-[13px] font-bold">
             Your design
           </text>
           <g className="stroke-ink" strokeWidth="1.2">
@@ -41,7 +41,7 @@ export default function FileTips() {
         </svg>
         <figcaption className="mt-4 space-y-2 text-sm">
           <p className="flex items-center gap-3">
-            <span aria-hidden className="h-3 w-6 shrink-0 rounded-sm bg-process-m/40" />
+            <span aria-hidden className="h-3 w-6 shrink-0 rounded-lg bg-gold/60" />
             Bleed: 3 mm of background past the trim line
           </p>
           <p className="flex items-center gap-3">
@@ -49,7 +49,7 @@ export default function FileTips() {
             Trim line: where the sheet is cut
           </p>
           <p className="flex items-center gap-3">
-            <span aria-hidden className="h-0 w-6 shrink-0 border-t-2 border-dashed border-process-c" />
+            <span aria-hidden className="h-0 w-6 shrink-0 border-t-2 border-dashed border-teal" />
             Safe area: keep text 5 mm inside the trim
           </p>
         </figcaption>

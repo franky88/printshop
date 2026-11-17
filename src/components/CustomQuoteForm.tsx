@@ -5,7 +5,7 @@ import { useState } from "react";
 import type { FileRef } from "@/lib/cart";
 import FileUpload from "./FileUpload";
 
-const field = "min-h-11 w-full rounded-sm border-2 border-ink/20 bg-paper px-3 py-2";
+const field = "min-h-11 w-full rounded-lg border border-ink/50 bg-paper px-3 py-2";
 
 export default function CustomQuoteForm() {
   const [files, setFiles] = useState<FileRef[]>([]);
@@ -42,12 +42,12 @@ export default function CustomQuoteForm() {
 
   if (sent) {
     return (
-      <div className="mt-10 rounded-2xl bg-paper p-6">
-        <h2 className="font-display text-2xl font-bold">Request sent</h2>
+      <div role="status" className="surface mt-8 rounded-2xl border-t-4 border-t-teal p-6 sm:p-8">
+        <h2 className="font-display text-2xl font-black">Request sent</h2>
         <p className="mt-2 max-w-prose">
           We&rsquo;ll review your details and reply by email or text with a quote.
         </p>
-        <Link href="/" className="mt-4 inline-flex min-h-11 items-center font-semibold text-cyan-ink underline underline-offset-4">
+        <Link href="/" className="mt-4 inline-flex min-h-11 items-center font-bold text-teal underline underline-offset-4">
           Back to the price calculator
         </Link>
       </div>
@@ -55,20 +55,24 @@ export default function CustomQuoteForm() {
   }
 
   return (
-    <form onSubmit={submit} className="mt-10 space-y-5 rounded-2xl bg-paper p-6">
-      <label className="block text-sm">
+    <form onSubmit={submit} className="surface mt-8 space-y-6 rounded-2xl p-6 sm:p-8">
+      <div className="border-b border-ink/15 pb-5">
+        <h2 className="text-xl font-black">Tell us what you need</h2>
+        <p className="mt-1 text-ink/75">We&rsquo;ll review your details and reply by email or text.</p>
+      </div>
+      <label className="block text-base">
         Full name
         <input name="name" required maxLength={100} autoComplete="name" className={`${field} mt-1`} />
       </label>
-      <label className="block text-sm">
+      <label className="block text-base">
         Email
         <input name="email" type="email" required autoComplete="email" className={`${field} mt-1`} />
       </label>
-      <label className="block text-sm">
+      <label className="block text-base">
         Mobile number
         <input name="phone" type="tel" required autoComplete="tel" className={`${field} mt-1`} />
       </label>
-      <label className="block text-sm">
+      <label className="block text-base">
         What do you need?
         <span className="block text-ink/65">Include the product, size, quantity, material, and when you need it.</span>
         <textarea
@@ -82,7 +86,7 @@ export default function CustomQuoteForm() {
         />
       </label>
       <div>
-        <p className="text-sm">Design or reference files (optional)</p>
+        <p>Design or reference files (optional)</p>
         <FileUpload files={files} onChange={setFiles} maxFiles={5} label="Add file" prefix="quote-files" />
       </div>
       {/* Honeypot field, hidden from people. */}
@@ -100,9 +104,9 @@ export default function CustomQuoteForm() {
       <button
         type="submit"
         disabled={busy}
-        className="min-h-12 w-full rounded-full bg-cyan-ink px-6 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30 sm:w-auto"
+        className="button-primary w-full sm:w-auto"
       >
-        {busy ? "Sending…" : "Send request"}
+        {busy ? "Sending…" : "Request my quote"}
       </button>
     </form>
   );

@@ -36,7 +36,7 @@ export default async function QuoteRequests({ searchParams }: { searchParams: Pr
 
   return (
     <>
-      <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">Quote requests</h1>
+      <h1 className="font-display text-2xl font-black tracking-tight sm:text-3xl">Quote requests</h1>
       <AdminSearch action="/admin/quotes" q={q} filter={sp.filter} placeholder="Search by name, email, phone, or request text" />
 
       <nav aria-label="Quote filters" className="mt-4 flex flex-wrap gap-2">
@@ -45,7 +45,7 @@ export default async function QuoteRequests({ searchParams }: { searchParams: Pr
             key={f.key}
             href={href(f.key)}
             aria-current={f.key === active.key ? "page" : undefined}
-            className={`flex min-h-11 items-center rounded-sm border-2 px-4 text-sm font-medium ${
+            className={`flex min-h-11 items-center rounded-lg border-2 px-4 text-sm font-bold ${
               f.key === active.key ? "border-ink bg-ink text-white" : "border-ink/20 bg-paper hover:border-ink"
             }`}
           >
@@ -69,10 +69,10 @@ export default async function QuoteRequests({ searchParams }: { searchParams: Pr
             <li key={r.id}>
               <Link
                 href={`/admin/quotes/${r.id}`}
-                className="grid gap-x-6 gap-y-1 rounded-2xl bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[1fr_auto] sm:items-center"
+                className="grid gap-x-6 gap-y-1 surface rounded-2xl p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[1fr_auto] sm:items-center"
               >
                 <span className="min-w-0">
-                  <span className="block truncate font-medium">{r.name}</span>
+                  <span className="block truncate font-bold">{r.name}</span>
                   <span className="block truncate text-sm text-ink/65">{r.details}</span>
                   <span className="block text-sm text-ink/65">
                     {fmtDate(r.createdAt)}
@@ -80,8 +80,8 @@ export default async function QuoteRequests({ searchParams }: { searchParams: Pr
                   </span>
                 </span>
                 <span
-                  className={`w-fit rounded-sm px-2 py-1 text-sm ${
-                    r.status === "NEW" ? "bg-yolk font-semibold" : "border border-ink/25"
+                  className={`w-fit rounded-lg px-2 py-1 text-sm ${
+                    r.status === "NEW" ? "bg-gold font-bold" : "border border-ink/25"
                   }`}
                 >
                   {QUOTE_LABEL[r.status as QuoteStatus] ?? r.status}

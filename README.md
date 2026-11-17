@@ -1,5 +1,7 @@
 # Printshop
 
+Brand reference: [SDMS Brand Guidelines](docs/brand/README.md), version 1.0 (November 2026), adopted for all future project design and copy work.
+
 Next.js (App Router) + Tailwind v4. Quote calculator, cart, file upload, and order placement.
 
 ## Run locally

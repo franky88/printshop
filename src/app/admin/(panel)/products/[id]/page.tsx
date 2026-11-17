@@ -15,10 +15,10 @@ export default async function EditProduct({ params }: { params: Promise<{ id: st
   const product = rowToProduct(row);
   return (
     <>
-      <Link href="/admin/products" className="inline-flex min-h-11 items-center text-sm font-semibold text-cyan-ink underline underline-offset-4">
+      <Link href="/admin/products" className="inline-flex min-h-11 items-center text-sm font-bold text-teal underline underline-offset-4">
         All products
       </Link>
-      <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">{product.name}</h1>
+      <h1 className="font-display text-2xl font-black tracking-tight sm:text-3xl">{product.name}</h1>
       <ProductEditor product={product} active={row.active} sortOrder={row.sortOrder} isNew={false} />
     </>
   );

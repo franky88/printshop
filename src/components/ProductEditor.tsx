@@ -15,10 +15,10 @@ type S = {
 };
 
 const rid = () => Math.random().toString(36).slice(2, 8);
-const field = "min-h-11 w-full rounded-sm border-2 border-ink/20 bg-paper px-3 py-2";
-const btn = "min-h-11 rounded-sm border-2 border-ink/30 bg-paper px-4 text-sm font-semibold hover:border-ink";
-const link = "min-h-11 shrink-0 text-sm text-cyan-ink underline underline-offset-4";
-const box = "rounded-2xl bg-paper p-5";
+const field = "min-h-11 w-full rounded-lg border border-ink/50 bg-paper px-3 py-2";
+const btn = "min-h-11 rounded-lg border-2 border-ink/30 bg-paper px-4 text-sm font-bold hover:border-ink";
+const link = "min-h-11 shrink-0 text-sm text-teal underline underline-offset-4";
+const box = "surface rounded-2xl p-5";
 
 function init(p: Product, active: boolean, sortOrder: number): S {
   return {
@@ -60,7 +60,7 @@ function build(s: S) {
 
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
-    <label className="block text-sm">
+    <label className="block text-base">
       {label}
       {hint && <span className="block text-ink/65">{hint}</span>}
       <div className="mt-1">{children}</div>
@@ -87,7 +87,7 @@ export default function ProductEditor({ product, active, sortOrder, isNew }: { p
       <input type="hidden" name="payload" value={JSON.stringify(build(s))} />
 
       <section className={`${box} space-y-4`}>
-        <h2 className="font-display text-lg font-bold">Basics</h2>
+        <h2 className="font-display text-lg font-black">Basics</h2>
         <Field label="Name"><input value={s.name} onChange={(e) => set({ name: e.target.value })} maxLength={60} className={field} /></Field>
         <Field label="Short description"><input value={s.summary} onChange={(e) => set({ summary: e.target.value })} maxLength={120} className={field} /></Field>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -113,7 +113,7 @@ export default function ProductEditor({ product, active, sortOrder, isNew }: { p
       </section>
 
       <section className={`${box} space-y-4`}>
-        <h2 className="font-display text-lg font-bold">Price</h2>
+        <h2 className="font-display text-lg font-black">Price</h2>
         <div className="grid gap-4 sm:grid-cols-3">
           <Field label="Base price per unit (₱)"><input type="number" step="0.01" min="0" value={s.base} onChange={(e) => set({ base: e.target.value })} className={field} /></Field>
           <Field label="Setup fee (₱)"><input type="number" step="0.01" min="0" value={s.setupFee} onChange={(e) => set({ setupFee: e.target.value })} className={field} /></Field>
@@ -125,7 +125,7 @@ export default function ProductEditor({ product, active, sortOrder, isNew }: { p
       </section>
 
       <section className={`${box} space-y-4`}>
-        <h2 className="font-display text-lg font-bold">Quantity</h2>
+        <h2 className="font-display text-lg font-black">Quantity</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Minimum"><input type="number" min="1" value={s.qtyMin} onChange={(e) => set({ qtyMin: e.target.value })} className={field} /></Field>
           <Field label="Step" hint="Customers can only add this many at a time."><input type="number" min="1" value={s.qtyStep} onChange={(e) => set({ qtyStep: e.target.value })} className={field} /></Field>
@@ -136,7 +136,7 @@ export default function ProductEditor({ product, active, sortOrder, isNew }: { p
       </section>
 
       <section className={`${box} space-y-3`}>
-        <h2 className="font-display text-lg font-bold">Bulk discounts</h2>
+        <h2 className="font-display text-lg font-black">Bulk discounts</h2>
         <p className="text-sm text-ink/65">The discount applies to the unit price once the quantity reaches the number in each row.</p>
         {s.tiers.map((t, i) => (
           <div key={i} className="flex flex-wrap items-end gap-3">
@@ -149,7 +149,7 @@ export default function ProductEditor({ product, active, sortOrder, isNew }: { p
       </section>
 
       <section className={`${box} space-y-4`}>
-        <h2 className="font-display text-lg font-bold">Options</h2>
+        <h2 className="font-display text-lg font-black">Options</h2>
         <p className="text-sm text-ink/65">
           Each group is a choice the customer makes, like size or finish. The first choice in a group is selected by default.
           &ldquo;Multiplies price&rdquo; of 1.5 makes it 50% more. &ldquo;Adds ₱ per unit&rdquo; adds a flat amount to each piece.
@@ -189,11 +189,11 @@ export default function ProductEditor({ product, active, sortOrder, isNew }: { p
       </section>
 
       <div className="flex flex-wrap items-center gap-4">
-        <button type="submit" disabled={pending} className="min-h-12 rounded-full bg-cyan-ink px-8 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30">
+        <button type="submit" disabled={pending} className="min-h-12 rounded-xl bg-teal px-8 font-bold text-white transition-colors hover:bg-ink disabled:bg-ink/30">
           {pending ? "Saving…" : isNew ? "Create product" : "Save changes"}
         </button>
         {state.error && <p role="alert" className="text-sm text-red-700">{state.error}</p>}
-        {state.ok && !dirty && !pending && <p role="status" className="text-sm font-medium">Saved. The website now uses these prices.</p>}
+        {state.ok && !dirty && !pending && <p role="status" className="text-sm font-bold">Saved. The website now uses these prices.</p>}
       </div>
     </form>
   );

@@ -89,7 +89,7 @@ export default function FileUpload({
   }
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 rounded-xl border border-dashed border-ink/40 bg-sheet p-4">
       {files.length > 0 && (
         <ul className="mb-3 space-y-1 text-sm">
           {files.map((f) => (
@@ -101,7 +101,7 @@ export default function FileUpload({
                 type="button"
                 disabled={busy}
                 onClick={() => onChange(files.filter((x) => x.url !== f.url))}
-                className="min-h-11 shrink-0 text-cyan-ink underline underline-offset-4 disabled:opacity-40"
+                className="min-h-11 shrink-0 text-teal underline underline-offset-4 disabled:opacity-40"
               >
                 Remove
               </button>
@@ -109,8 +109,9 @@ export default function FileUpload({
           ))}
         </ul>
       )}
-      <label className="inline-flex min-h-11 cursor-pointer items-center rounded-sm border-2 border-dashed border-ink/40 px-4 text-sm font-medium hover:border-ink focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-cyan-ink">
-        {busy ? `Uploading… ${progress}%` : label}
+      <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-teal bg-paper px-4 text-base font-bold text-teal hover:bg-teal/5 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-teal">
+        <span aria-hidden="true">↑</span>
+        <span role="status">{busy ? `Uploading… ${progress}%` : label}</span>
         <input
           type="file"
           multiple={maxFiles > 1}

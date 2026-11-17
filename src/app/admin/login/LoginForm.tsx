@@ -7,14 +7,14 @@ export default function LoginForm() {
   const [state, action, pending] = useActionState(login, { error: "" });
   return (
     <form action={action} className="mt-6 space-y-4">
-      <label className="block text-sm">
+      <label className="block text-base">
         Password
         <input
           name="password"
           type="password"
           required
           autoComplete="current-password"
-          className="mt-1 min-h-11 w-full rounded-sm border-2 border-ink/20 bg-paper px-3"
+          className="mt-1 min-h-11 w-full rounded-lg border border-ink/50 bg-paper px-3"
         />
       </label>
       {state.error && (
@@ -25,7 +25,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="min-h-12 w-full rounded-full bg-cyan-ink px-6 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30"
+        className="button-primary w-full"
       >
         {pending ? "Checking…" : "Log in"}
       </button>

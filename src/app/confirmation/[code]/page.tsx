@@ -40,19 +40,20 @@ export default async function Confirmation({ params }: { params: Promise<{ code:
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto max-w-2xl px-5 pb-20 pt-10">
-        <h1 className="font-display text-2xl font-bold tracking-tight sm:text-4xl">Order {order.code}</h1>
-        <p className="mt-3 text-lg">
+      <main id="main-content" className="mx-auto max-w-3xl px-5 pb-10 pt-10 sm:pt-14">
+        <p className="eyebrow">Your order, at a glance</p>
+        <h1 className="mt-2 font-display text-3xl font-black tracking-tight sm:text-5xl">Order {order.code}</h1>
+        <p className="mt-4 inline-block rounded-lg bg-teal/10 px-4 py-2 text-teal">
           Status: <strong>{status}</strong>
         </p>
         <p className="mt-1 text-sm text-ink/65">Save this page&rsquo;s link or order number to check on your order.</p>
 
-        <div className="mt-8 rounded-2xl bg-paper p-6">
+        <div className="mt-8 surface rounded-2xl p-6">
           <ul className="divide-y divide-dashed divide-ink/25">
             {order.items.map((it) => (
               <li key={it.id} className="flex items-start justify-between gap-4 py-3 first:pt-0">
                 <div>
-                  <p className="font-semibold">
+                  <p className="font-bold">
                     {it.product.name} × {it.qty}
                   </p>
                   <p className="text-sm text-ink/70">
@@ -79,7 +80,7 @@ export default async function Confirmation({ params }: { params: Promise<{ code:
                 <dd>{peso(Number(order.shippingFee))}</dd>
               </div>
             )}
-            <div className="flex justify-between font-display text-lg font-bold">
+            <div className="flex justify-between border-t border-ink/15 pt-3 font-display text-xl font-black">
               <dt>Total</dt>
               <dd>{peso(Number(order.total))}</dd>
             </div>
@@ -96,7 +97,7 @@ export default async function Confirmation({ params }: { params: Promise<{ code:
           </p>
         )}
 
-        <Link href="/" className="mt-8 inline-flex min-h-11 items-center font-semibold text-cyan-ink underline underline-offset-4">
+        <Link href="/" className="mt-8 inline-flex min-h-11 items-center font-bold text-teal underline underline-offset-4">
           Start another quote
         </Link>
       </main>

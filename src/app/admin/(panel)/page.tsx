@@ -36,7 +36,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
 
   return (
     <>
-      <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">Orders</h1>
+      <h1 className="font-display text-2xl font-black tracking-tight sm:text-3xl">Orders</h1>
       <AdminSearch action="/admin" q={q} filter={sp.filter} placeholder="Search by order number, name, email, or phone" />
 
       <nav aria-label="Order filters" className="mt-4 flex flex-wrap gap-2">
@@ -45,7 +45,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
             key={f.key}
             href={href(f.key)}
             aria-current={f.key === active.key ? "page" : undefined}
-            className={`flex min-h-11 items-center rounded-sm border-2 px-4 text-sm font-medium ${
+            className={`flex min-h-11 items-center rounded-lg border-2 px-4 text-sm font-bold ${
               f.key === active.key ? "border-ink bg-ink text-white" : "border-ink/20 bg-paper hover:border-ink"
             }`}
           >
@@ -69,11 +69,11 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
             <li key={o.id}>
               <Link
                 href={`/admin/orders/${o.code}`}
-                className="grid gap-x-6 gap-y-1 rounded-2xl bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[9rem_1fr_auto_11rem] sm:items-center"
+                className="grid gap-x-6 gap-y-1 surface rounded-2xl p-4 hover:outline hover:outline-2 hover:outline-ink sm:grid-cols-[9rem_1fr_auto_11rem] sm:items-center"
               >
                 <span className="font-display font-bold tabular-nums">{o.code}</span>
                 <span className="min-w-0">
-                  <span className="block truncate font-medium">{o.customer}</span>
+                  <span className="block truncate font-bold">{o.customer}</span>
                   <span className="block truncate text-sm text-ink/65">
                     {o.items.map((i) => `${i.product.name} × ${i.qty}`).join(", ")}
                   </span>
@@ -81,10 +81,10 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
                     {fmtDate(o.createdAt)}, {o.delivery === "PICKUP" ? "pickup" : "delivery"}
                   </span>
                 </span>
-                <span className="font-semibold tabular-nums sm:text-right">{peso(Number(o.total))}</span>
+                <span className="font-bold tabular-nums sm:text-right">{peso(Number(o.total))}</span>
                 <span
-                  className={`w-fit rounded-sm px-2 py-1 text-sm sm:justify-self-end ${
-                    o.status === "PAYMENT_SUBMITTED" ? "bg-yolk font-semibold" : "border border-ink/25"
+                  className={`w-fit rounded-lg px-2 py-1 text-sm sm:justify-self-end ${
+                    o.status === "PAYMENT_SUBMITTED" ? "bg-gold font-bold" : "border border-ink/25"
                   }`}
                 >
                   {LABEL[o.status as Status] ?? o.status}

@@ -7,26 +7,24 @@ const link = "inline-flex min-h-11 items-center underline-offset-4 hover:underli
 export default function SiteFooter() {
   const hasContact = contact.phone || contact.email || contact.facebook;
   return (
-    <footer className="mt-28 rounded-t-[2rem] bg-ink text-white">
-      <div className="mx-auto max-w-6xl px-5 pb-8 pt-10">
-        {/* Press colour bar: the four process inks. */}
-        <div aria-hidden className="flex gap-1">
-          <span className="h-3 w-12 rounded-full bg-process-c" />
-          <span className="h-3 w-12 rounded-full bg-process-m" />
-          <span className="h-3 w-12 rounded-full bg-process-y" />
-          <span className="h-3 w-12 rounded-full bg-white/80" />
+    <footer className="mt-20 border-t-4 border-mint bg-ink text-white sm:mt-28">
+      <div className="mx-auto max-w-6xl px-5 pb-8 pt-12">
+        <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-8">
+          <p className="font-display text-3xl font-black tracking-tight sm:text-4xl">Printing made simple.</p>
+          <Link href="/#price" className="inline-flex min-h-11 items-center gap-3 font-bold text-white hover:text-gold">Get your price online <span aria-hidden="true">↗</span></Link>
         </div>
         <div className="mt-8 grid gap-8 sm:grid-cols-3">
           <div>
-            <p className="font-display text-lg font-semibold">{shop.name}</p>
+            <p className="font-display text-lg font-black">{shop.name}</p>
+            <p className="mt-2 max-w-64 text-white/75">Clear prices. Helpful people. Prints for everyday life.</p>
             {contact.address && <p className="mt-2 whitespace-pre-line text-sm text-white/80">{contact.address}</p>}
             {contact.hours && <p className="mt-2 whitespace-pre-line text-sm text-white/80">{contact.hours}</p>}
           </div>
           <nav aria-label="Footer">
-            <p className="font-display text-sm font-semibold">Order</p>
+            <p className="font-display text-sm font-black">Order</p>
             <ul className="mt-1 text-sm text-white/90">
               <li>
-                <Link href="/" className={link}>Price calculator</Link>
+                <Link href="/#price" className={link}>Price calculator</Link>
               </li>
               <li>
                 <Link href="/custom-quote" className={link}>Custom quote</Link>
@@ -38,7 +36,7 @@ export default function SiteFooter() {
           </nav>
           {hasContact && (
             <div>
-              <p className="font-display text-sm font-semibold">Contact</p>
+              <p className="font-display text-sm font-black">Contact</p>
               <ul className="mt-1 text-sm text-white/90">
                 {contact.phone && (
                   <li>
@@ -59,7 +57,7 @@ export default function SiteFooter() {
             </div>
           )}
         </div>
-        <p className="mt-10 text-sm text-white/70">
+        <p className="mt-10 border-t border-white/15 pt-6 text-sm text-white/70">
           © {new Date().getFullYear()} {shop.name}. We accept {shop.payment.methods.map((m) => m.label).join(", ")}.
         </p>
       </div>

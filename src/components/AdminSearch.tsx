@@ -11,13 +11,13 @@ export default function AdminSearch({ action, q, placeholder, filter }: { action
         placeholder={placeholder}
         aria-label={placeholder}
         maxLength={100}
-        className="min-h-11 w-full max-w-md rounded-sm border-2 border-ink/20 bg-paper px-3"
+        className="min-h-11 w-full max-w-md rounded-lg border border-ink/50 bg-paper px-3"
       />
-      <button type="submit" className="min-h-11 rounded-full bg-ink px-5 text-sm font-semibold text-white transition-colors hover:bg-cyan-ink">
+      <button type="submit" className="min-h-11 rounded-xl bg-ink px-5 text-sm font-bold text-white transition-colors hover:bg-teal">
         Search
       </button>
       {q && (
-        <Link href={action} className="flex min-h-11 items-center text-sm text-cyan-ink underline underline-offset-4">
+        <Link href={action} className="flex min-h-11 items-center text-sm text-teal underline underline-offset-4">
           Clear
         </Link>
       )}

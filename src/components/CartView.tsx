@@ -9,7 +9,7 @@ import { useCart } from "@/lib/cart";
 import { peso, quote, describeSelection } from "@/lib/quote";
 import FileUpload from "./FileUpload";
 
-const field = "min-h-11 w-full rounded-sm border-2 border-ink/20 bg-paper px-3 py-2";
+const field = "min-h-11 w-full rounded-lg border border-ink/50 bg-paper px-3 py-2";
 
 export default function CartView({ catalog }: { catalog: Product[] }) {
   const byId = (id: string) => catalog.find((p) => p.id === id);
@@ -22,10 +22,11 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
   if (!ready) return null;
   if (items.length === 0) {
     return (
-      <div className="mt-10">
-        <p className="text-lg">Your order is empty.</p>
-        <Link href="/" className="mt-3 inline-flex min-h-11 items-center font-semibold text-cyan-ink underline underline-offset-4">
-          Get a quote
+      <div className="surface mt-8 rounded-2xl p-8 sm:p-12">
+        <h2 className="text-2xl font-black">Your next print starts here.</h2>
+        <p className="mt-3 max-w-prose text-ink/75">Your order is empty. Choose a product and see your price before adding it to your order.</p>
+        <Link href="/#price" className="button-primary mt-6">
+          Find your print
         </Link>
       </div>
     );
@@ -72,16 +73,16 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
   }
 
   return (
-    <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_400px]">
+    <div className="mt-8 grid items-start gap-6 lg:grid-cols-[1fr_400px] lg:gap-8">
       <ul className="space-y-4">
         {priced.map(({ it, q }) => (
-          <li key={it.id} className="rounded-2xl bg-paper p-5">
+          <li key={it.id} className="surface rounded-2xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="font-display text-lg font-bold">{byId(it.productId)?.name}</p>
+                <p className="font-display text-lg font-black">{byId(it.productId)?.name}</p>
                 <p className="mt-1 text-sm text-ink/70">{describeSelection(byId(it.productId), it.selection)}</p>
               </div>
-              <p className="font-display text-xl font-bold tabular-nums">{q ? peso(q.total) : "-"}</p>
+              <p className="shrink-0 font-display text-xl font-black tabular-nums">{q ? peso(q.total) : "-"}</p>
             </div>
             <div className="mt-3 flex flex-wrap items-center gap-4">
               <label className="flex items-center gap-2 text-sm">
@@ -92,13 +93,13 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
                   min={byId(it.productId)?.qty.min}
                   value={it.qty || ""}
                   onChange={(e) => update(it.id, { qty: Number(e.target.value) })}
-                  className="min-h-11 w-24 rounded-sm border-2 border-ink/20 bg-paper px-3"
+                  className="min-h-11 w-24 rounded-lg border border-ink/50 bg-paper px-3"
                 />
               </label>
               <button
                 type="button"
                 onClick={() => remove(it.id)}
-                className="min-h-11 text-sm text-cyan-ink underline underline-offset-4"
+                className="min-h-11 text-sm text-teal underline underline-offset-4"
               >
                 Remove item
               </button>
@@ -115,19 +116,19 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
         ))}
       </ul>
 
-      <form onSubmit={submit} className="space-y-5 lg:sticky lg:top-6 lg:self-start">
-        <div className="rounded-2xl bg-paper p-5">
-          <h2 className="font-display text-lg font-bold">Your details</h2>
+      <form onSubmit={submit} className="min-w-0 space-y-5 lg:sticky lg:top-28 lg:self-start">
+        <div className="surface rounded-2xl p-5">
+          <h2 className="font-display text-lg font-black">Your details</h2>
           <div className="mt-4 space-y-4">
-            <label className="block text-sm">
+            <label className="block text-base">
               Full name
               <input name="customer" required maxLength={100} autoComplete="name" className={`${field} mt-1`} />
             </label>
-            <label className="block text-sm">
+            <label className="block text-base">
               Email
               <input name="email" type="email" required autoComplete="email" className={`${field} mt-1`} />
             </label>
-            <label className="block text-sm">
+            <label className="block text-base">
               Mobile number
               <input name="phone" type="tel" required autoComplete="tel" className={`${field} mt-1`} />
             </label>
@@ -137,8 +138,8 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
                 {(["PICKUP", "DELIVERY"] as const).map((d) => (
                   <label
                     key={d}
-                    className={`flex min-h-11 flex-1 cursor-pointer items-center justify-center rounded-sm border-2 text-sm font-medium focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-cyan-ink ${
-                      delivery === d ? "border-cyan-ink bg-cyan-ink text-white" : "border-ink/20 bg-paper"
+                    className={`flex min-h-11 flex-1 cursor-pointer items-center justify-center rounded-lg border-2 text-sm font-bold focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-teal ${
+                      delivery === d ? "border-teal bg-teal text-white" : "border-ink/20 bg-paper"
                     }`}
                   >
                     <input type="radio" name="delivery" checked={delivery === d} onChange={() => setDelivery(d)} className="sr-only" />
@@ -148,19 +149,19 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
               </div>
             </fieldset>
             {delivery === "DELIVERY" && (
-              <label className="block text-sm">
+              <label className="block text-base">
                 Delivery address
                 <textarea name="address" required maxLength={500} rows={3} autoComplete="street-address" className={`${field} mt-1`} />
               </label>
             )}
-            <label className="block text-sm">
+            <label className="block text-base">
               Notes for the shop (optional)
               <textarea name="notes" maxLength={1000} rows={3} className={`${field} mt-1`} />
             </label>
           </div>
         </div>
 
-        <div className="rounded-2xl bg-paper p-5">
+        <div className="surface rounded-2xl p-5">
           <dl className="space-y-1.5 text-sm tabular-nums">
             <div className="flex justify-between">
               <dt>Items</dt>
@@ -173,9 +174,9 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
               </div>
             )}
           </dl>
-          <div className="mt-4 flex items-end justify-between">
+          <div className="mt-4 flex flex-wrap items-end justify-between gap-3 border-t border-ink/15 pt-4">
             <span className="text-sm text-ink/70">Total</span>
-            <span className="bg-[linear-gradient(transparent_62%,var(--color-yolk)_62%)] px-1 font-display text-3xl font-bold tabular-nums">
+            <span className="font-display text-3xl font-black tabular-nums">
               {peso(subtotal + fee)}
             </span>
           </div>
@@ -187,7 +188,7 @@ export default function CartView({ catalog }: { catalog: Product[] }) {
           <button
             type="submit"
             disabled={busy || invalid}
-            className="mt-5 min-h-12 w-full rounded-full bg-cyan-ink px-6 font-semibold text-white transition-colors hover:bg-ink disabled:bg-ink/30"
+            className="button-primary mt-5 w-full"
           >
             {busy ? "Placing order…" : "Place order"}
           </button>

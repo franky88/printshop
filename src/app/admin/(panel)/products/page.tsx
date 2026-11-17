@@ -11,8 +11,8 @@ export default async function Products() {
   return (
     <>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">Products</h1>
-        <Link href="/admin/products/new" className="flex min-h-11 items-center rounded-full bg-cyan-ink px-4 text-sm font-semibold text-white hover:bg-ink">
+        <h1 className="font-display text-2xl font-black tracking-tight sm:text-3xl">Products</h1>
+        <Link href="/admin/products/new" className="flex min-h-11 items-center rounded-xl bg-teal px-4 text-sm font-bold text-white hover:bg-ink">
           Add product
         </Link>
       </div>
@@ -24,15 +24,15 @@ export default async function Products() {
             <li key={r.id}>
               <Link
                 href={`/admin/products/${r.id}`}
-                className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 rounded-2xl bg-paper p-4 hover:outline hover:outline-2 hover:outline-ink"
+                className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 surface rounded-2xl p-4 hover:outline hover:outline-2 hover:outline-ink"
               >
                 <span>
-                  <span className="block font-medium">{p.name}</span>
+                  <span className="block font-bold">{p.name}</span>
                   <span className="block text-sm text-ink/65">
                     Base {peso(p.base)} per {p.unit}, {p.options.length} option group{p.options.length === 1 ? "" : "s"}
                   </span>
                 </span>
-                <span className={`rounded-sm px-2 py-1 text-sm ${r.active ? "border border-ink/25" : "bg-yolk font-semibold"}`}>
+                <span className={`rounded-lg px-2 py-1 text-sm ${r.active ? "border border-ink/25" : "bg-gold font-bold"}`}>
                   {r.active ? "Shown" : "Hidden"}
                 </span>
               </Link>

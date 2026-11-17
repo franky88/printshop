@@ -10,7 +10,7 @@ import { shop } from "@/config";
 
 const kb = (n: number) => (n >= 1048576 ? `${(n / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
 const tone = {
-  primary: "bg-cyan-ink text-white hover:bg-ink",
+  primary: "bg-teal text-white hover:bg-ink",
   plain: "border-2 border-ink/30 bg-paper hover:border-ink",
   danger: "text-red-700 underline underline-offset-4",
 };
@@ -29,33 +29,33 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
 
   return (
     <>
-      <Link href="/admin" className="inline-flex min-h-11 items-center text-sm font-semibold text-cyan-ink underline underline-offset-4">
+      <Link href="/admin" className="inline-flex min-h-11 items-center text-sm font-bold text-teal underline underline-offset-4">
         All orders
       </Link>
       <div className="flex flex-wrap items-baseline gap-x-4">
-        <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl tabular-nums">{order.code}</h1>
-        <p className="text-lg font-semibold">{LABEL[order.status as Status] ?? order.status}</p>
+        <h1 className="font-display text-2xl font-black tracking-tight sm:text-3xl tabular-nums">{order.code}</h1>
+        <p className="text-lg font-bold">{LABEL[order.status as Status] ?? order.status}</p>
       </div>
       <p className="mt-1 text-sm text-ink/65">Placed {fmtDate(order.createdAt)}</p>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_360px]">
         <div className="space-y-4">
           {order.items.map((it) => (
-            <section key={it.id} className="rounded-2xl bg-paper p-5">
+            <section key={it.id} className="surface rounded-2xl p-5">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h2 className="font-display text-lg font-bold">
+                  <h2 className="font-display text-lg font-black">
                     {it.product.name} × {it.qty}
                   </h2>
                   <p className="text-sm text-ink/70">{it.summary || describeSelection(rowToProduct(it.product), it.selection as Record<string, string>)}</p>
                 </div>
-                <p className="font-semibold tabular-nums">{peso(Number(it.lineTotal))}</p>
+                <p className="font-bold tabular-nums">{peso(Number(it.lineTotal))}</p>
               </div>
               {it.files.length > 0 ? (
                 <ul className="mt-3 space-y-1 text-sm">
                   {it.files.map((f) => (
                     <li key={f.id}>
-                      <a href={f.url} target="_blank" rel="noopener noreferrer" className="text-cyan-ink underline underline-offset-4">
+                      <a href={f.url} target="_blank" rel="noopener noreferrer" className="text-teal underline underline-offset-4">
                         {f.name}
                       </a>{" "}
                       <span className="text-ink/60">({kb(f.sizeBytes)})</span>
@@ -67,7 +67,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
               )}
             </section>
           ))}
-          <dl className="space-y-1.5 rounded-2xl bg-paper p-5 text-sm tabular-nums">
+          <dl className="space-y-1.5 surface rounded-2xl p-5 text-sm tabular-nums">
             <div className="flex justify-between">
               <dt>Items</dt>
               <dd>{peso(Number(order.subtotal))}</dd>
@@ -78,7 +78,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
                 <dd>{peso(Number(order.shippingFee))}</dd>
               </div>
             )}
-            <div className="flex justify-between font-display text-lg font-bold">
+            <div className="flex justify-between font-display text-lg font-black">
               <dt>Total</dt>
               <dd>{peso(Number(order.total))}</dd>
             </div>
@@ -87,14 +87,14 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
 
         <div className="space-y-4 lg:sticky lg:top-6 lg:self-start">
           {moves.length > 0 && (
-            <section className="rounded-2xl bg-paper p-5">
-              <h2 className="font-display text-lg font-bold">Update status</h2>
+            <section className="surface rounded-2xl p-5">
+              <h2 className="font-display text-lg font-black">Update status</h2>
               <div className="mt-3 flex flex-wrap items-center gap-3">
                 {moves.map((m) => (
                   <form key={m.to + m.label} action={changeStatus}>
                     <input type="hidden" name="code" value={order.code} />
                     <input type="hidden" name="to" value={m.to} />
-                    <button type="submit" className={`min-h-11 rounded-sm px-4 text-sm font-semibold ${tone[m.tone]}`}>
+                    <button type="submit" className={`min-h-11 rounded-lg px-4 text-sm font-bold ${tone[m.tone]}`}>
                       {m.label}
                     </button>
                   </form>
@@ -103,8 +103,8 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
             </section>
           )}
 
-          <section className="rounded-2xl bg-paper p-5">
-            <h2 className="font-display text-lg font-bold">Payment</h2>
+          <section className="surface rounded-2xl p-5">
+            <h2 className="font-display text-lg font-black">Payment</h2>
             {order.paymentRef ? (
               <dl className="mt-3 space-y-1 text-sm">
                 <div className="flex justify-between gap-4">
@@ -113,7 +113,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt className="text-ink/65">Reference</dt>
-                  <dd className="font-semibold tabular-nums">{order.paymentRef}</dd>
+                  <dd className="font-bold tabular-nums">{order.paymentRef}</dd>
                 </div>
                 {order.paymentSubmittedAt && (
                   <div className="flex justify-between gap-4">
@@ -123,7 +123,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
                 )}
                 {order.paymentProofUrl && (
                   <div>
-                    <a href={order.paymentProofUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-cyan-ink underline underline-offset-4">
+                    <a href={order.paymentProofUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-teal underline underline-offset-4">
                       Open screenshot
                     </a>
                   </div>
@@ -142,21 +142,21 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
             )}
           </section>
 
-          <section className="rounded-2xl bg-paper p-5">
-            <h2 className="font-display text-lg font-bold">Customer</h2>
+          <section className="surface rounded-2xl p-5">
+            <h2 className="font-display text-lg font-black">Customer</h2>
             <dl className="mt-3 space-y-1 text-sm">
               <div>{order.customer}</div>
               <div>
-                <a href={`mailto:${order.email}`} className="text-cyan-ink underline underline-offset-4">
+                <a href={`mailto:${order.email}`} className="text-teal underline underline-offset-4">
                   {order.email}
                 </a>
               </div>
               <div>
-                <a href={`tel:${order.phone}`} className="text-cyan-ink underline underline-offset-4">
+                <a href={`tel:${order.phone}`} className="text-teal underline underline-offset-4">
                   {order.phone}
                 </a>
               </div>
-              <div className="pt-2 font-medium">{order.delivery === "PICKUP" ? "Pickup" : "Delivery"}</div>
+              <div className="pt-2 font-bold">{order.delivery === "PICKUP" ? "Pickup" : "Delivery"}</div>
               {order.address && <div className="whitespace-pre-line">{order.address}</div>}
               {order.notes && (
                 <div className="pt-2">

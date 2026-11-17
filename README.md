@@ -12,8 +12,9 @@ Next.js (App Router) + Tailwind v4. Quote calculator, cart, file upload, and ord
 
 ## Set up on Vercel
 1. Push to GitHub and import the repo in Vercel.
-2. In the project's Storage tab, create a **Prisma Postgres** database and a **Blob** store and connect both. Set `DATABASE_URL` to the direct connection string, the one that starts with `postgres://` (not the `prisma+postgres://` one). The Blob store sets `BLOB_READ_WRITE_TOKEN`.
+2. In the project's Storage tab, create a **Prisma Postgres** database and a **private Blob** store and connect both. Set `DATABASE_URL` to the direct connection string, the one that starts with `postgres://` (not the `prisma+postgres://` one). Include the Blob store's read-write token environment variable (`BLOB_READ_WRITE_TOKEN`) in the Production and Preview connections; client upload tokens require it.
 3. Locally: `vercel env pull .env`, then `npm run db:push` once.
+4. Redeploy after connecting storage or changing environment variables so the deployment uses the current token.
 
 ## Where things are
 - `src/lib/catalog.ts`   starting products (copied into the database on first load)
@@ -26,11 +27,17 @@ Next.js (App Router) + Tailwind v4. Quote calculator, cart, file upload, and ord
 - `src/config.ts`        shop name, order prefix, flat delivery fee
 
 ## Notes
-- Uploaded files use unguessable public links. Anyone with the link can open the file.
+- New uploads use private Blob storage. Staff open artwork, quote attachments, and payment screenshots through authenticated `/admin/files` downloads. Existing public attachments keep their original links.
 - Payment is manual. Set your GCash, Maya and bank details in `src/config.ts` (they are placeholders now).
 - Order flow: RECEIVED, then PAYMENT_SUBMITTED when the customer sends a reference number, then you verify and set PAID.
 - After pulling this update, run `npm run db:push` again (the schema gained payment fields).
 - PayMongo and customer emails come later.
+
+## Blob upload troubleshooting
+
+The upload access must match the store: this app uses `access: "private"`. Requesting public access on a private store returns HTTP 400 (`Cannot use public access on a private store`). The browser can show this as a missing CORS header and retry until the upload times out. Adding CORS headers to this app does not fix a response from Vercel's Blob API.
+
+Keep the existing private store connected and deploy this version. No database migration or replacement storage token is needed if `BLOB_READ_WRITE_TOKEN` already points to that store. Uploads still go directly to Blob, with a 100 MB per-file limit; private file contents are streamed only after checking the admin session.
 
 ## Products and prices
 Edit them in `/admin/products`: name, base price, setup fee, minimum order, quantity buttons, bulk discounts, and option

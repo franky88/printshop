@@ -7,6 +7,7 @@ import { LABEL, fmtDate, movesFor, type Status } from "@/lib/orders";
 import { rowToProduct } from "@/lib/catalog-db";
 import { describeSelection, peso } from "@/lib/quote";
 import { shop } from "@/config";
+import { adminFileUrl } from "@/lib/validate";
 
 const kb = (n: number) => (n >= 1048576 ? `${(n / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
 const tone = {
@@ -55,7 +56,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
                 <ul className="mt-3 space-y-1 text-sm">
                   {it.files.map((f) => (
                     <li key={f.id}>
-                      <a href={f.url} target="_blank" rel="noopener noreferrer" className="text-teal underline underline-offset-4">
+                      <a href={adminFileUrl(f.url)} target="_blank" rel="noopener noreferrer" className="text-teal underline underline-offset-4">
                         {f.name}
                       </a>{" "}
                       <span className="text-ink/60">({kb(f.sizeBytes)})</span>
@@ -123,7 +124,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ code: s
                 )}
                 {order.paymentProofUrl && (
                   <div>
-                    <a href={order.paymentProofUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-teal underline underline-offset-4">
+                    <a href={adminFileUrl(order.paymentProofUrl)} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-teal underline underline-offset-4">
                       Open screenshot
                     </a>
                   </div>

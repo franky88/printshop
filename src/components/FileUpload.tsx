@@ -63,7 +63,7 @@ export default function FileUpload({
         let blob: Awaited<ReturnType<typeof upload>>;
         try {
           blob = await upload(`${prefix}/${file.name}`, file, {
-            access: "public",
+            access: "private",
             handleUploadUrl: "/api/upload",
             contentType: type,
             abortSignal: ctrl.signal,

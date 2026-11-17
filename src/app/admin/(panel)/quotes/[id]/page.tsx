@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { fmtDate } from "@/lib/orders";
 import { QUOTE_LABEL, fileName, quoteMoves, type QuoteStatus } from "@/lib/quotes";
 import { shop } from "@/config";
+import { adminFileUrl } from "@/lib/validate";
 
 const tone = {
   primary: "bg-teal text-white hover:bg-ink",
@@ -43,7 +44,7 @@ export default async function QuoteRequest({ params }: { params: Promise<{ id: s
               <ul className="mt-3 space-y-1 text-sm">
                 {q.fileUrls.map((u) => (
                   <li key={u}>
-                    <a href={u} target="_blank" rel="noopener noreferrer" className="text-teal underline underline-offset-4">
+                    <a href={adminFileUrl(u)} target="_blank" rel="noopener noreferrer" className="text-teal underline underline-offset-4">
                       {fileName(u)}
                     </a>
                   </li>
